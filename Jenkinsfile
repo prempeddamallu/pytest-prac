@@ -10,7 +10,7 @@ pipeline {
         // Docker Hub credentials (configured in Jenkins)
         DOCKER_HUB_CREDENTIALS = 'dockerhub' // The Jenkins credential ID for Docker Hub
         DOCKER_USERNAME = 'your-docker-username'          // Docker Hub username
-        DOCKER_REPO = 'your-docker-username/my-python-app'  // Docker Hub repository name
+        DOCKER_REPO = 'premdatagrokr/my-python-app'  // Docker Hub repository name
     }
 
     stages {
@@ -36,7 +36,7 @@ pipeline {
                 script {
                     // Run the Docker container with the specified container name
                     echo "Running Docker container with name: ${CONTAINER_NAME}"
-                    sh "docker run --rm --name ${CONTAINER_NAME} ${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker run --name ${CONTAINER_NAME} ${IMAGE_NAME}:${IMAGE_TAG}"
                 }
             }
         }
