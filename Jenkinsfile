@@ -8,7 +8,7 @@ pipeline {
         // Set the container name (you can change this in Jenkins job configuration or set a default value)
         CONTAINER_NAME = 'python-app-container'  // Default container name
         // Docker Hub credentials (configured in Jenkins)
-        DOCKER_HUB_CREDENTIALS = 'dockerhub' // The Jenkins credential ID for Docker Hub
+        DOCKER_CREDENTIALS_ID = 'dockerhub' // The Jenkins credential ID for Docker Hub
         DOCKER_USERNAME = 'premdatagrokr' // Docker Hub username (replace with your actual username)
         DOCKER_REPO = 'premdatagrokr/my-python-app'  // Docker Hub repository name (replace with your actual repo)
     }
