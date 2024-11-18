@@ -48,21 +48,6 @@ pipeline {
             }
         }
 
-        stage('Login to Docker Hub') {
-            steps {
-                script {
-                    // Login to Docker Hub using Jenkins credentials
-                    echo "Logging in to Docker Hub"
-                    // withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIALS, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    //     sh "echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin"
-                    // }
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
-                        // Push the Docker image
-                        sh "docker push ${DOCKER_IMAGE_NAME}" // Use double quotes
-                    }
-                }
-            }
-        }
 
         stage('Tag Docker Image') {
             steps {
@@ -79,8 +64,13 @@ pipeline {
                 script {
                     // Push the image to Docker Hub
                     echo "Pushing Docker image to Docker Hub"
-                    sh "docker push ${DOCKER_REPO}:${IMAGE_TAG}"
+                    
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+                        // Push the Docker image
+                        sh "docker push ${DOCKER_REPO}:${IMAGE_TAG}"// Use double quotes
+                    }
                 }
+                
             }
         }
     }
