@@ -73,24 +73,25 @@ pipeline {
                 
             }
         }
-    }
-
-    stage('Clean Up') {
-        steps {
-            script {
-                try {
-                    // Clean up Docker images and containers after the build (optional)
-                    echo "Cleaning up Docker images and containers"
-                    sh "docker stop ${CONTAINER_NAME} || true" // Stop the container
-                    sh "docker rm ${CONTAINER_NAME} || true"  // Remove the container if it exists
-                    sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG} || true"  // Remove the image if it exists
-                    sh "docker rmi ${DOCKER_REPO}:${IMAGE_TAG} || true" // Remove the tagged image locally
-                } catch (Exception e) {
-                    error "Failed to clean up Docker resources: ${e.message}"
+        stage('Clean Up') {
+            steps {
+                script {
+                    try {
+                        // Clean up Docker images and containers after the build (optional)
+                        echo "Cleaning up Docker images and containers"
+                        sh "docker stop ${CONTAINER_NAME} || true" // Stop the container
+                        sh "docker rm ${CONTAINER_NAME} || true"  // Remove the container if it exists
+                        sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG} || true"  // Remove the image if it exists
+                        sh "docker rmi ${DOCKER_REPO}:${IMAGE_TAG} || true" // Remove the tagged image locally
+                    } catch (Exception e) {
+                        error "Failed to clean up Docker resources: ${e.message}"
+                    }
                 }
             }
         }
     }
+
+    
 
     post {
         success {
